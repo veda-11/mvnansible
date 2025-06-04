@@ -1,0 +1,13 @@
+---
+- name: Deploy to Tomcat
+  hosts: web
+  become: yes
+  tasks:
+    - name: Copy WAR file to Tomcat
+      copy:
+        src: "/var/snap/jenkins/4870/workspace/ansur@2/target/ansur.war"
+        dest: "/opt/tomcat/webapps/ansur.war"
+        remote_src: no
+
+    - name: Restart Tomcat manually
+      shell: "/opt/tomcat/bin/shutdown.sh && sleep 5 && /opt/tomcat/bin/startup.sh"
